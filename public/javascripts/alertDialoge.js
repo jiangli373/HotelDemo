@@ -13,7 +13,7 @@
         className:"modal in fade",
         id:"thisalert",
         attributes:{
-            "tabindex":"-1",
+            "tabindex":"1",
             "role":"dialog",
             "aria-hidden":"true"
         },
@@ -27,7 +27,8 @@
                     $(template()).appendTo(_this.$el);
                 }
             });
-            this.shown();
+//            this.hidden();
+//            this.shown();
             return this;
         },
         events:{
@@ -36,18 +37,15 @@
         },
         hidden:function(){
            $("#thisalert").modal( {
-//               backdrop:false,
-               show:true
+               show:false
            })
         },
         shown:function(){
             $("#thisalert").modal( {
-                backdrop:false,
-                show:false
+                show:true
             })
         },
         close:function(){
-            alert("lllll");
             return false;
         }
     });

@@ -36,13 +36,23 @@
         login:function () {
             var view = this;
             hotel.auth.userName = $("#inputUserName").val();
+            console.log(this.count);
             this.count++;
 
             var socket = io.connect("?userName=" + hotel.auth.userName,{'force new connection':true});
 
             socket.on('disconnect', function () {
                 $("#alertDialog").modal('show');
+//                hotel.alertDialog = new hotel.AlertDialogeView;
+//                hotel.alertDialog.render().$el.modal( {
+//                    show:true
+//                });
                 console.log('socket disconnect');
+            });
+
+            socket.on('reconnect', function () {
+                hotel.auth.reconnectFlag = true;
+                $("#alertDialog").modal('hide');
             });
 
             socket.on('error', function () {
@@ -50,11 +60,13 @@
                 console.log('socket io error');
                 return false;
             });
+
             socket.on('connect', function () {
-                console.log('login ok.');
-                $("#alertDialog").modal('hide');
                 $("#loginDialog").modal('hide');
-                view.forward();
+                if(!hotel.auth.isReconnect()){
+                    view.forward();
+                }
+
             });
         },
         forward:function () {
@@ -77,6 +89,9 @@
             new LoginView().render().$el.modal({
                 show:true
             });
+        },
+        isReconnect:function(){
+            return this.reconnectFlag;
         }
     };
 
