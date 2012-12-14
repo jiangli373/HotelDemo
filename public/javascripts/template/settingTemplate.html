@@ -1,0 +1,58 @@
+<script id="settingView" type="text/x-handlebars-template">
+    <form class="form-horizontal">
+        <fieldset>
+            <legend>文章设置</legend>
+            <div class="control-group">
+                <label class="control-label" for="mainTitle">主标题</label>
+                <div class="controls">
+                    <input type="text" class="input-xlarge" id="mainTitle">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="viceTitle">副标题</label>
+                <div class="controls">
+                    <input type="text" class="input-xlarge" id="viceTitle">
+                    <p class="help-block">
+                        用简洁的文字描述本站点。
+                    </p>
+                </div>
+
+            </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="select01">新用户角色</label>
+                <div class="controls">
+                    <select id="select01">
+                        <option>请选择</option>
+                        <option>管理员</option>
+                        <option>订阅者</option>
+                        <option>编辑</option>
+                        <option>投稿者</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="signalSelect">成员资格</label>
+                <div class="controls">
+                    <input type="checkbox" id="signalSelect">任何人都可以阅读
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="fileInput">上传插图</label>
+                <div class="controls">
+                    <input class="input-file" id="fileInput" type="file">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="textarea">简要介绍</label>
+                <div class="controls">
+                    <textarea class="input-xlarge" id="textarea" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary saveInfo">保存更改</button>
+                <button class="btn">取消</button>
+            </div>
+        </fieldset>
+    </form>
+</script>

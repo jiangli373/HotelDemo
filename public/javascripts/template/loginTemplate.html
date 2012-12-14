@@ -1,0 +1,33 @@
+<script id="login_template" type="text/x-handlebars-template">
+    <div class="modal-header">
+        <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+        <h3>登录</h3>
+    </div>
+    <div class="modal-body">
+
+        <div class="alert alert-error" style="display:none">
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+           用户名或者密码错误
+        </div>
+        <form class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label" for="inputUserName">用户名:</label>
+                <div class="controls">
+                    <input type="text" id="inputUserName" placeholder="用户名">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputPassword">密码:</label>
+                <div class="controls">
+                    <input type="password" id="inputPassword" placeholder="密码">
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <a  class="btn"  aria-hidden="true">关闭</a>
+                    <a class="btn btn-primary bt_login" >登录</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
