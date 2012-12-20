@@ -17,6 +17,7 @@
         tagName:"div",
         className:"container",
         render:function () {
+            $(hotel.contentEl).empty();
             var _this = this;
             $.ajax({
                 async:false,
@@ -32,11 +33,10 @@
             "click .saveInfo":"saveInfo"
         },
         saveInfo:function(){
-            hotel.router.doCommand("countryContent", "", 0);
+            hotel.router.doCommand();
+            return false;
         }
     });
-
-
 })(hotel);
 
 

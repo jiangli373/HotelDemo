@@ -19,16 +19,8 @@
         },
         render:function () {
             var _this = this;
-            $.ajax({
-                async:false,
-                url:"javascripts/template/alertTemplate.html",
-                success:function (data) {
-                    var template = Handlebars.compile($(data).html());
-                    $(template()).appendTo(_this.$el);
-                }
-            });
-//            this.hidden();
-//            this.shown();
+            var template = Handlebars.compile($("#alertDialoge").html());
+            $(template()).appendTo(_this.$el);
             return this;
         },
         events:{
@@ -36,9 +28,7 @@
 
         },
         hidden:function(){
-           $("#thisalert").modal( {
-               show:false
-           })
+           $("#thisalert").modal('hide');
         },
         shown:function(){
             $("#thisalert").modal( {

@@ -18,7 +18,7 @@
                 async:false,
                 url:"javascripts/template/contenTemplate.html",
                 success:function(data){
-                    var template = Handlebars.compile($(data).html());//TODO 改为ajax同步加载
+                    var template = Handlebars.compile($(data).html());
                     $(template()).appendTo(_this.$el);
                 }
             });

@@ -8,37 +8,49 @@
     var HotelAppRouter = Backbone.Router.extend({
         routes:{
             ':command':'doCommand',
-            ':command/*params':'doCommand',
-            '':'doCommand'
+            ':command/:params':'doCommand',
+            '':'doCommand',
+            ':command/:action/:params':'doCommand'
         },
-        doCommand:function (command, params, flag) {
-            command = command || 'toolbar';//设置默认command
-            params = params || '';//设置默认params
-            switch (flag) {
-                case 0:
-                    $(hotel.contentEl).empty();
-                    break;
-                case 1:
-                    $(hotel.centerContentEl).empty();
-                    break;
-                case 2:
-                 $(hotel.middleContentEl).remove();
-                    break;
-                default :
-                    break;
-            }
 
-            console.log('do command:' + command);
+        showHeader:function (command, params) {
+            var paramArray = [];
+            if (params !== '' && params !== undefined) {
+                paramArray = params.split('/');
+//                paramArray[0] = params.split('/')[0];
+//                 params = params.substring(command.length + 1);
+            }
+            console.log("paramArray[0]>>>>>>>>>>>" + paramArray[0]);
+            this.doCommand(command, paramArray[0], paramArray[1], true);
+        },
+
+        doCommand:function (command, action, params, flag) {
+            console.log("command>>>>>>>>>>>" + command);
+            console.log("action>>>>>>>>>>>" + action);
+            console.log("flag>>>>>>>>>>>" + flag);
+            console.log("params>>>>>>>>>>>" + params);
+            flag = flag || false;
 
             if (hotel.auth.isLogin() && hotel.auth.hasAuth(command)) {
-                console.log('has auth');
+                hotel.toolBarView = new hotel.ToolBarView();
+                hotel.toolBarView.render().$el.appendTo(hotel.toolBarEl);
+                hotel.toolBarView.showDefaultView(command, action,params, flag);
 
-                if (hotel.commands[command]) {
-                    var paramArray = [];
-                    if (params !== '') {
-                        paramArray = params.split('/')
-                    }
+                var paramArray = [];
+                if (params !== '' && params !== undefined) {
+                    paramArray = params.split('/');
+                }
+
+                if (command != undefined && command != '' && action == undefined) {
+
                     hotel.commands[command].apply(null, paramArray);
+
+                } else if (command != undefined && action != undefined) {
+                    if (flag) {
+                        hotel.commands[command].apply(null, paramArray);
+                    } else {
+                        hotel.commands[command].apply(null, paramArray);
+                    }
                 }
             } else {
                 hotel.auth.showLoginView();

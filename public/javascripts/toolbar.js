@@ -10,45 +10,66 @@
 
     hotel.commands.toolbar = function (param1, param2, param3) {
         console.log('load content, param1:' + param1 + ' ,param2: ' + param2 + ' ,param3:' + param3);
-        new ToolBarView().render().$el.appendTo(hotel.toolBarEl);
     };
 
-    var ToolBarView = Backbone.View.extend({
+    var ToolBarItemModel = Backbone.Model.extend({
+
+    });
+
+    var ToolBarItemCollection = Backbone.Collection.extend({
+        model:ToolBarItemModel
+    });
+
+
+    hotel.ToolBarView = Backbone.View.extend({
         tagName:"div",
         className:"navbar navbar-inverse navbar-fixed-top",
+        initialize:function(){
+
+        },
         render:function () {
+            $(hotel.toolBarEl).empty();
+            var collection = new ToolBarItemCollection;
+            collection.add(new ToolBarItemModel({title:'文章', command:'countryContent'}));
+            collection.add(new ToolBarItemModel({title:'设置', command:'settingContent'}));
+            collection.add(new ToolBarItemModel({title:'关于', command:'aboutContent'}));
             var _this = this;
+            var template;
             $.ajax({
                 async:false,
                 url:"javascripts/template/toolBarTemplate.html",
                 success:function (data) {
-                    var template = Handlebars.compile($(data).html());
-                    $(template()).appendTo(_this.$el);
-                    hotel.router.doCommand("countryContent", "", 0);
+                    template = Handlebars.compile($(data).html());
+                    $(template({item:eval("(" + JSON.stringify(collection) + ")")})).appendTo(_this.$el);
                 }
             });
+            this.delegateEvents();
             return this;
         },
         events:{
-            "click ul li":"showContent"
+            "click ul li a":"showContent"
         },
+        showDefaultView:function(command,action,params,flag){
+            command =  command || "countryContent";
+            if($("ul li").hasClass(command)){
+                $("."+command).children("a").trigger("click");
+                if(flag){
+
+                    if(action!=undefined&&action!=''){
+                        self.location="#"+command+"/"+action+"/"+params;
+                    }else{
+                        self.location="#"+command;
+                    }
+
+                }
+
+            }
+
+        },
+
         showContent:function (e) {
             $(e.target).parent().parent().children("li").removeClass("active");
             $(e.target).parent().addClass("active");
-
-            if ($(e.target).parent().hasClass("countryname")) {
-
-                hotel.router.doCommand("countryContent", "", 0);
-
-            } else if ($(e.target).parent().hasClass("setting")) {
-
-                hotel.router.doCommand("settingContent", "", 0);
-
-            }  else if ($(e.target).parent().hasClass("about")) {
-
-                hotel.router.doCommand("aboutContent", "", 0);
-
-            }
         }
     });
 

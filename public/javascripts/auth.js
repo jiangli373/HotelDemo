@@ -21,7 +21,7 @@
             $.ajax({
                 async:false,
                 url:"javascripts/template/loginTemplate.html",
-                success:function(data){
+                success:function (data) {
                     var template = Handlebars.compile($(data).html());
                     $(template()).appendTo(_this.$el);
                 }
@@ -36,23 +36,17 @@
         login:function () {
             var view = this;
             hotel.auth.userName = $("#inputUserName").val();
-            console.log(this.count);
             this.count++;
-
-            var socket = io.connect("?userName=" + hotel.auth.userName,{'force new connection':true});
+            var socket = io.connect("?userName=" + hotel.auth.userName, {'force new connection':true});
 
             socket.on('disconnect', function () {
-                $("#alertDialog").modal('show');
-//                hotel.alertDialog = new hotel.AlertDialogeView;
-//                hotel.alertDialog.render().$el.modal( {
-//                    show:true
-//                });
+                hotel.alertDialogeView.render().$el.modal('show');
                 console.log('socket disconnect');
             });
 
             socket.on('reconnect', function () {
                 hotel.auth.reconnectFlag = true;
-                $("#alertDialog").modal('hide');
+                hotel.alertDialogeView.hidden();
             });
 
             socket.on('error', function () {
@@ -63,10 +57,9 @@
 
             socket.on('connect', function () {
                 $("#loginDialog").modal('hide');
-                if(!hotel.auth.isReconnect()){
+                if (!hotel.auth.isReconnect()) {
                     view.forward();
                 }
-
             });
         },
         forward:function () {
@@ -74,7 +67,8 @@
             anchor = anchor || '';
             var command = anchor.split('/')[0];
             var params = anchor.substring(command.length + 1);
-            hotel.router.doCommand(command, params,0);
+             console.log(">>>>>>>"+command+"<<<<<<<<<<<"+params);
+            hotel.router.showHeader(command,params);
         }
     });
 
@@ -83,6 +77,7 @@
             return this.userName != null;
         },
         hasAuth:function (command) {
+
             return true;
         },
         showLoginView:function () {
@@ -90,7 +85,7 @@
                 show:true
             });
         },
-        isReconnect:function(){
+        isReconnect:function () {
             return this.reconnectFlag;
         }
     };

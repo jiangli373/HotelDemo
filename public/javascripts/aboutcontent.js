@@ -17,6 +17,7 @@
         tagName:"div",
         className:"container",
         render:function () {
+            $(hotel.contentEl).empty();
             var _this = this;
             $.ajax({
                 async:false,

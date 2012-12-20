@@ -23,33 +23,30 @@
     <script src="javascripts/auth.js"></script>
     <script src="javascripts/content.js"></script>
     <script src="javascripts/toolbar.js"></script>
-    <script src="javascripts/indexcontent.js"></script>
     <script src="javascripts/countrycontent.js"></script>
-    <script src="javascripts/slideBar.js"></script>
+    <script src="javascripts/itemList.js"></script>
     <script src="javascripts/alertDialoge.js"></script>
     <script src="javascripts/centerContent.js"></script>
     <script src="javascripts/aboutcontent.js"></script>
     <script src="javascripts/settingcontent.js"></script>
     <script src="javascripts/app.js"></script>
-
+    <script id="alertDialoge" type="text/x-handlebars-template">
+        <div class="modal-body">
+            <p>与服务器失去连接，请耐心等候....</p>
+        </div>
+    </script>
 </head>
 <body>
 <div id="toolBar"></div>
 <div id="content"></div>
 <div id="footBar"></div>
-
-<div id="alertDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-body">
-        <p>与服务器失去连接，请耐心等候....</p>
-    </div>
-</div>
-
 <script>
     hotel.toolBarEl = "#toolBar";
     hotel.contentEl = "#content";
     hotel.centerContentEl = "#content .container-fluid";
     hotel.middleContentEl = "#content .container-fluid .span9";
     hotel.footBarEl = "#footBar";
+    hotel.alertDialogeView = new hotel.AlertDialogeView();
     Backbone.history.start();
 </script>
 </body>
