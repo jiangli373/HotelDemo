@@ -10,12 +10,12 @@
 
     hotel.commands.countryContent = function (param1, param2, param3) {
         console.log('load content, param1:' + param1 + ' ,param2: ' + param2 + ' ,param3:' + param3);
-        var countryContentView = new countryContentView();
+        var countryContentView = new CountryContentView();
         countryContentView.render().$el.appendTo(hotel.contentEl);
         countryContentView.showDefaultView(param1);
     };
 
-    var countryContentView = Backbone.View.extend({
+    var CountryContentView = Backbone.View.extend({
         tagName:"div",
         className:"container-fluid",
         render:function () {

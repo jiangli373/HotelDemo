@@ -5,6 +5,18 @@
  * Time: 上午10:02
  */
 (function (hotel) {
+
+
+    var UserModel = Backbone.Model.extend({
+        url:'login',
+        validate: function(attrs) {
+            if(attrs.userName==''||attrs.password==''){
+              return "不能为空"
+            }
+        }
+    });
+
+
     var LoginView = Backbone.View.extend({
         tagName:"div",
         className:"modal hide fade",
@@ -35,7 +47,9 @@
 
         login:function () {
             var view = this;
+
             hotel.auth.userName = $("#inputUserName").val();
+
             this.count++;
             var socket = io.connect("?userName=" + hotel.auth.userName, {'force new connection':true});
 
@@ -67,7 +81,6 @@
             anchor = anchor || '';
             var command = anchor.split('/')[0];
             var params = anchor.substring(command.length + 1);
-             console.log(">>>>>>>"+command+"<<<<<<<<<<<"+params);
             hotel.router.showHeader(command,params);
         }
     });
